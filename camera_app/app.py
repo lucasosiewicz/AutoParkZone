@@ -13,11 +13,11 @@ detector = YOLO('../model/plates_YOLO.pt')
 reader = Reader(['en'])
 
 load_dotenv()
-DB_USERNAME = os.getenv('DB_USERNAME')
-DB_PASSWORD = os.getenv('DB_PASSWORD')
-DB_HOST = os.getenv('DB_HOST')
-DB_PORT = os.getenv('DB_PORT')
-DB_NAME = os.getenv('DB_NAME')
+DB_USERNAME = os.getenv('DJANGO_USER')
+DB_PASSWORD = os.getenv('DJANGO_PASSWORD')
+DB_HOST = os.getenv('DJANGO_HOST')
+DB_PORT = os.getenv('DJANGO_PORT')
+DB_NAME = os.getenv('DJANGO_NAME')
 DB_URL = f'postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 
 st.title('Camera App')
@@ -78,5 +78,5 @@ if uploaded_file:
 
     engine = create_engine(DB_URL)
     with engine.connect() as conn:
-        conn.execute(text(f"INSERT INTO currently_on (plate_code, arrives_at) VALUES ('{result_ocr[0]}', NOW())"))
+        conn.execute(text(f"INSERT INTO plates_plate (plate_code, arrived_at) VALUES ('{result_ocr[0]}', NOW())"))
         conn.commit()
