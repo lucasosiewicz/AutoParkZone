@@ -59,7 +59,7 @@ ROOT_URLCONF = 'payment_app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['plates/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

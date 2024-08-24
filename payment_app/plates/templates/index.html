@@ -1,0 +1,26 @@
+<!-- templates/search.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>App</title>
+</head>
+<body>
+    <h1>Pass the plate's code below</h1>
+    <form method="get" action=".">
+        {{ form.as_p }}
+        <button type="submit">Search</button>
+    </form>
+    
+    {% if results %}
+        <h2>Search Results:</h2>
+        <ul>
+            {% for plate in results %}
+                <li><a href="{% url 'plate_details' plate.pk %}">{{ plate }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+</body>
+</html>

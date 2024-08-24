@@ -20,6 +20,6 @@ import plates.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', plates.views.home, name='home'),
-    path('add_plate/', plates.views.add_plate, name='add_plate'),
+    path('', plates.views.search, name='search'),
+    path('<int:pk>/', plates.views.plate_details, name='plate_details'),
 ]
