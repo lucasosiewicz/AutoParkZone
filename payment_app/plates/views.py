@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from plates.models import Plate
 from plates.forms import PlateForm
+from plates.models import Plate, PlatePaid
+from datetime import datetime
+import pytz
 
 # Create your views here.
 #def home(request):
@@ -19,5 +21,20 @@ def search(request):
 
 def plate_details(request, pk):
     plate = get_object_or_404(Plate, pk=pk)
-    return render(request, 'plate_details.html', {'plate': plate})
+    now = datetime.now()
+    return render(request, 'plate_details.html', {'plate': plate, 'now': now})
 
+
+def pay(request, pk):
+    if request.method == 'POST':
+        plate = get_object_or_404(Plate, pk=pk)
+        cost = 0
+
+        cost = (datetime.now(pytz.utc) - plate.arrived_at).seconds / 60
+        cost = cost * 0.05
+        cost = round(cost, 2)
+        plate_paid = PlatePaid(plate_code=plate.plate_code, arrived_at=plate.arrived_at, cost=cost)
+        plate_paid.save()
+        plate.delete()
+
+        return render(request, 'pay.html', {'plate_paid': plate_paid, 'cost': cost})

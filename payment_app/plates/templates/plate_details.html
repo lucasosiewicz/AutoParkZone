@@ -6,8 +6,13 @@
 </head>
 <body>
     <h1>{{ plate }}</h1>
-    <p><strong>Code:</strong> {{ plate }}</p>
-    <p><strong>Arrived at:</strong> {{plate.arrived_at}}</p>
+    <form method="POST" action="{% url 'pay' pk=plate.pk %}">
+        {% csrf_token %}
+        <p><strong>Code:</strong> {{ plate }}</p>
+        <p><strong>Arrived at:</strong> {{plate.arrived_at}}</p>
+        <p><strong>Now: </strong>{{ now }}</p>
+        <p><button type="submit">Pay for a parking</button></p>
+    </form>
     <a href="{% url 'search' %}">Back to search</a>
 </body>
 </html>

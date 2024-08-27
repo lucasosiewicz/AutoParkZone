@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', plates.views.search, name='search'),
     path('<int:pk>/', plates.views.plate_details, name='plate_details'),
+    path('<int:pk>/pay/', plates.views.pay, name='pay'),
 ]
