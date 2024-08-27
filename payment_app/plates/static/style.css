@@ -1,0 +1,51 @@
+@font-face {
+    font-family: platefont;
+    src: url("{% static 'fonts/arklatrs-webfont.ttf' %}") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #C9D2D1;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+.image-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 20%;
+    justify-content: center;
+}
+
+.image-item {
+    position: relative;
+    display: inline-block;
+    margin: 10px; /* Margin between images */
+}
+
+.image-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.image-item a {
+    font-family: 'platefont';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    padding: 5px;
+}
