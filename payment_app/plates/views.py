@@ -21,8 +21,8 @@ def search(request):
 
 def plate_details(request, pk):
     plate = get_object_or_404(Plate, pk=pk)
-    now = datetime.now()
-    return render(request, 'plate_details.html', {'plate': plate, 'now': now})
+    cost = round(((datetime.now(pytz.utc) - plate.arrived_at).seconds / 60) * 0.05, 2)
+    return render(request, 'plate_details.html', {'plate': plate, 'cost': cost})
 
 
 def pay(request, pk):

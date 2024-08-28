@@ -1,16 +1,13 @@
-@font-face {
-    font-family: platefont;
-    src: url("{% static 'fonts/arklatrs-webfont.ttf' %}") format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-
 body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     font-family: Arial, sans-serif;
+    background-color: #C9D2D1;
     margin: 0;
     padding: 0;
-    background-color: #C9D2D1;
+    min-height: 100vh;
 }
 
 h1, h2 {
@@ -20,14 +17,18 @@ h1, h2 {
 .image-container {
     display: flex;
     flex-wrap: wrap;
-    width: 20%;
     justify-content: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .image-item {
     position: relative;
-    display: inline-block;
-    margin: 10px; /* Margin between images */
+    width: 30%;
+    max-width: 300px;
+    margin-bottom: 20px;
 }
 
 .image-item img {
@@ -37,15 +38,40 @@ h1, h2 {
 }
 
 .image-item a {
-    font-family: 'platefont';
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: black;
-    font-size: 40px;
-    font-weight: bold;
+    font-family: 'platefont';
     text-align: center;
     text-decoration: none;
-    padding: 5px;
+    color: black;
+    font-size: 40px;
+    letter-spacing: 7px;
+    font-weight: bold;
+    background-color: transparent; /* Usuwa pasek na dole */
+    padding: 0; /* Usuwa dodatkowe odstępy */
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Wyśrodkowanie całego formularza */
+    justify-content: center;
+    width: 100%;
+    max-width: 400px; /* Maksymalna szerokość formularza */
+    margin: 0 auto; /* Wyśrodkowanie formularza */
 }

@@ -12,7 +12,7 @@
         {% csrf_token %}
         <p><strong>Code:</strong> {{ plate }}</p>
         <p><strong>Arrived at:</strong> {{plate.arrived_at}}</p>
-        <p><strong>Now: </strong>{{ now }}</p>
+        <p><strong>To pay: </strong>{{ cost }} PLN</p>
         <p><button type="submit">Pay for a parking</button></p>
     </form>
     <a href="{% url 'search' %}">Back to search</a>

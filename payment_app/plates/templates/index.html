@@ -6,6 +6,18 @@
     <title>App</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <style>
+        @font-face {
+            font-family: platefont;
+            src: url('static/fonts/arklatrs-webfont.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .image-item a {
+            font-family: 'platefont';
+        }
+    </style>
 </head>
 <body>
     <h1>Pass the plate's code below</h1>
