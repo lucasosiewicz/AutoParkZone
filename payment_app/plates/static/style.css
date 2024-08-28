@@ -47,7 +47,6 @@ h1, h2 {
     text-decoration: none;
     color: black;
     font-size: 40px;
-    letter-spacing: 7px;
     font-weight: bold;
     background-color: transparent; /* Usuwa pasek na dole */
     padding: 0; /* Usuwa dodatkowe odstępy */
