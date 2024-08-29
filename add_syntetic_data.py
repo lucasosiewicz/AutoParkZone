@@ -14,7 +14,7 @@ DB_URL = f'postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME
 
 # DATABASE CONNECTION
 ENGINE = create_engine(DB_URL)
-N_RECORDS = 1000
+N_RECORDS = 10000
 
 # Add synthetic data
 QUERY = """

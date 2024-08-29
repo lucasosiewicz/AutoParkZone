@@ -23,19 +23,14 @@ data = pd.read_sql('SELECT * FROM plates_platepaid', engine)
 # DASH APP
 app = Dash(__name__)
 app.layout = html.Div([
-                html.H1('Cars per hour'),
-                dcc.DatePickerSingle(id='date', display_format='YYYY-MM-DD', date=datetime.now().date()),
-                dcc.Graph(id='cars_per_hour', style={'width': '75%'}),
-              ], style={
+                dcc.DatePickerSingle(id='date', display_format='YYYY-MM-DD', date=datetime.now().date(), 
+                                     style={'position': 'realtive', 'align': 'center'}),
+                dcc.Graph(id='cars_per_hour', style={'height': '75%'}),
+            ], style={
                     'position': 'fixed',
-                    'bottom': '0',       # Ustawienie dolnego marginesu na 0
-                    'right': '0',        # Ustawienie prawego marginesu na 0
-                    'display': 'flex',   # Użycie flexboxa do ułożenia elementów obok siebie
-                    'align-items': 'center',
-                    'background-color': 'white',  # Tło białe (możesz zmienić)
-                    'padding': '10px',   # Opcjonalne padding
-                    'border': '1px solid #ccc',  # Opcjonalna ramka
-                    'box-shadow': '0px 0px 10px rgba(0,0,0,0.1)'  # Opcjonalny cień
+                    'top': '0',       
+                    'right': '0',        
+                    'display': 'flex'   
               })
 
 # FUNCTIONS
@@ -62,9 +57,25 @@ def cars_per_hour(date):
     df = pd.merge(all_hours, df_count, on='hour', how='left').fillna(0)
 
     # Plotting
-    fig = px.bar(df, x='hour', y='count', labels={'hour': 'Hour', 'count': 'Number of cars'})
+    fig = px.bar(df, 
+                 x='hour', 
+                 y='count'
+            )
+    fig.update_layout(
+        title={
+            'text': 'Number of cars per hour',
+            'x': 0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'
+        },
+        xaxis_title='Hour',
+        yaxis_title='Number of cars',
+    )
     fig.update_xaxes(tickvals=list(range(24)))
+    fig.update_yaxes(tickvals=list(range(0, df['count'].astype(int).max() + 1)))
     return fig
+
+
 
 
 
