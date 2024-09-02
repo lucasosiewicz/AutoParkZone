@@ -93,3 +93,5 @@ Dashboard allows You to truck current situation on parking, check trafic on park
     D. Currently occupied places - pie chart presents how many places are currently occupied.
 
     E. Cars currently on parking - table shows cars currently on parking. You can check their plate's code and when exactly they arrived.
+
+Dashboard is nested in <a href="https://github.com/lucasosiewicz/AutoParkZone/tree/main/dashboard">`dashboard`</a> directory.
