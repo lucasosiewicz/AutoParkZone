@@ -13,3 +13,11 @@ cars_already_parked_style = {
     'width': '50%',
     'height': '50%',
 }
+
+profit_per_month_style = {
+    'position': 'absolute',
+    'bottom': '0',
+    'left': '0',
+    'width': '33%',
+    'height': '50%',
+}

@@ -29,12 +29,25 @@ app = Dash(__name__)
 app.layout = html.Div([
                 html.Div([
                     dcc.Graph(id='cars_per_hour'),
-                    dcc.DatePickerSingle(id='date_hour', display_format='YYYY-MM-DD', date=datetime.now().date()),
+                    dcc.DatePickerSingle(id='date_hour', 
+                                         display_format='YYYY-MM-DD', 
+                                         date=datetime.now().date(), 
+                                         style={'position': 'absolute', 'top': '0', 'right': '0'}),
                 ], style=cars_per_hour_style),
                 html.Div([
                     dcc.Graph(id='cars_on_parking'),
-                    dcc.DatePickerSingle(id='date_parking', display_format='YYYY-MM-DD', date=datetime.now().date()),
+                    dcc.DatePickerSingle(id='date_parking', 
+                                         display_format='YYYY-MM-DD', 
+                                         date=datetime.now().date(), 
+                                         style={'position': 'absolute', 'top': '0', 'left': '0'}),
                 ], style=cars_already_parked_style),
+                html.Div([
+                    dcc.Graph(id='profit_per_month'),
+                    dcc.DatePickerSingle(id='date_month', 
+                                         display_format='YYYY-MM', 
+                                         date=datetime.now().date(),
+                                         style={'position': 'absolute', 'top': '0', 'right': '0', 'width': '15%'}),
+                ], style=profit_per_month_style)
             ]
         )
 
@@ -121,6 +134,49 @@ def cars_on_parking(date):
 
     return fig
 
+
+@app.callback(Output('profit_per_month', 'figure'),
+              Input('date_month', 'date'))
+def profit_per_month(date):
+    
+    if date is None:
+        date = datetime.now().date()
+
+    date = datetime.strptime(date, '%Y-%m-%d').date()
+
+    # Fetching data from the current month
+    df_month = data[(data['paid_at'].dt.month == date.month) & (data['paid_at'].dt.year == date.year)]
+
+    # Grouping by day
+    all_days = pd.DataFrame({'day': range(1, 32)})
+
+    # Counting profit per day
+    for i, row in all_days.iterrows():
+        day = row['day']
+        all_days.at[i, 'profit'] = df_month[df_month['paid_at'].dt.day == day]['cost'].sum()
+
+    # Counting whole month profit
+    whole_profit = all_days['profit'].sum()
+
+    # Plotting
+    fig = px.line(all_days, 
+                  x='day', 
+                  y='profit',
+            )
+    fig.update_layout(
+        title={
+            'text': 'Profit per day - whole month profit: ' + str(round(whole_profit, 2)) + ' PLN',
+            'x': 0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'
+        },
+        xaxis_title='Day',
+        yaxis_title='Profit',
+    )
+    fig.update_xaxes(tickvals=list(range(1, 32)))
+    fig.update_yaxes(tickvals=list(range(0, int(all_days['profit'].max()) + 1, 100)))
+
+    return fig
 
 
 if __name__ == '__main__':
