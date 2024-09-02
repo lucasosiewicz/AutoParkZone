@@ -10,22 +10,26 @@
     - [Tuning easyOCR](#ocr),
     - [App prototype](#app)
 2. [Payments app](#second),
-3. Dashboard.
+3. [Dashboard](#dash).
+
+<a name="first"></a>
 
 ### 1. Car plates detection system
-<a name="first"></a>
 <p style="text-align: justify"> This problem was solved with usege two object detection models: <a href="https://github.com/ultralytics/yolov5">YOLOv5</a> and <a href="https://www.jaided.ai/easyocr/">easyOCR</a>. First one is capable to detect and recognize 80 diffrent classes including cars, animals etc. YOLOv5 is distinguished by it's accuracy and high efficiency performence. Second one allows to detect text from the image.</p>
 
-#### Re-training YOLOv5
 <a name="yolo"></a>
+
+#### Re-training YOLOv5
 <p style="text-align: justify">Althrough YOLOv5 is really powerful model, it doesn't recognize car licence plates. In this case re-training model was necessary. I've used <a href="https://www.kaggle.com/datasets/andrewmvd/car-plate-detection/data">Car License Plate Detection Dataset</a> to learn model how to detect plates. Whole process is nested in <a href="https://github.com/lucasosiewicz/AutoParkZone/blob/main/notebooks/fine-tune%20model.ipynb">`notebooks\fine-tune model.ipynb`</a> and it's performence was checked in <a href="https://github.com/lucasosiewicz/AutoParkZone/blob/main/notebooks/testing%20new%20model.ipynb">`notebooks\testing new model.ipynb`</a>.</p>
 
-#### Tuning easuOCR
 <a name="ocr"></a>
+
+#### Tuning easuOCR
 <p style="text-align: justify">After solving plate detection problem next challange was to recognize text from the image. Perfect tool for that was easyOCR which handle with a lot of difficult problems. It may be confusing why I re-trained YOLO when easyOCR can detect text without any problem. Here occures first disadvantage of easyOCR - this model is to much efficient. Let's imagine the situation when arriving car has a sticker with some text - it would be detected and passed to the system too. Usage of YOLO allows to detect plate and cut the image around it. That's the easiest way to avoid errors. EasyOCR was constrained to detect only letters and digits to avoid passing some unallowed characters in the output. Another problem that occures was a gap between first and second part of plate's code. To handle that parameter `width_ths` was setted to 0.7.</p>
 
-#### App prototype
 <a name="app"></a>
+
+#### App prototype
 To show more empirically how actually system works I've builded an app prototype which allows to load Your own image and guides You through the whole process. To open web app follow instructions below:
 
 ```
@@ -44,8 +48,9 @@ After passing an image to the application You will see whole process step by ste
 <p style="text-align: justify">You might notice that the result was send to the database and it's right! Saved result is going to the main database of django website.</p>
 
 
-### 2. Payment app
 <a name="second"></a>
+
+### 2. Payment app
 To open website follow instructions below:
 
 ```
@@ -69,3 +74,22 @@ You should see the website intefrace like below:
 ![alt text](img/image-6.png)
 
 After that Your code will be removed to another table which is core of a dashboard.
+
+
+<a name="dash"></a>
+
+### 3. Dashboard
+
+Dashboard allows You to truck current situation on parking, check trafic on parking and follow how many profit does it brings. It looks like below:
+
+![alt text](img/image-7.png)
+
+    A. Number of cars currently at the parking per hour - plot is showing how many cars was present at the parking for each hour per day.
+
+    B. Number of cars arriving per hour - plot is presenting when and how many cars arriving to the parking.
+
+    C. Profit per day - line chart shows how many profit parking brings. It also display summary profit per month.
+
+    D. Currently occupied places - pie chart presents how many places are currently occupied.
+
+    E. Cars currently on parking - table shows cars currently on parking. You can check their plate's code and when exactly they arrived.
