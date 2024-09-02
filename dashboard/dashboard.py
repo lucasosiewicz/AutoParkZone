@@ -4,6 +4,7 @@ import pandas as pd
 import plotly.express as px
 from datetime import datetime
 from dotenv import load_dotenv
+import plotly.graph_objects as go
 from sqlalchemy import create_engine
 from dash import Dash, html, dcc, Output, Input
 
@@ -80,6 +81,24 @@ app.layout = html.Div([
                                 }
                             )),
                 ], style=occupacity_style),
+                html.Div([
+                    dcc.Graph(figure=go.Figure(
+                        data=go.Table(
+                            header=dict(
+                                values=['Plate code', 'Arrived at']
+                            ), cells=dict(
+                                values=pd.read_sql("SELECT plate_code, TO_CHAR(arrived_at, 'YYYY-MM-DD HH24:MI:SS') FROM plates_plate", engine).T
+                            ),
+                        )
+                    ).update_layout(
+                        title={
+                            'text': 'Cars currently on parking',
+                            'x': 0.5,
+                            'xanchor': 'center',
+                            'yanchor': 'top'
+                        }
+                    ), style=table_style),
+                ])
             ])
 
 # FUNCTIONS

@@ -29,3 +29,9 @@ occupacity_style = {
     'right': '37%',
     'width': '30%',
 }
+
+table_style={
+    'position': 'absolute', 
+    'bottom': '0', 
+    'right': '0',
+}
