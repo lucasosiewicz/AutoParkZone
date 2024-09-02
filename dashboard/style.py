@@ -20,4 +20,12 @@ profit_per_month_style = {
     'left': '0',
     'width': '33%',
     'height': '50%',
+    'z-index': '1',
+}
+
+occupacity_style = {
+    'position': 'absolute',
+    'bottom': '0',
+    'right': '37%',
+    'width': '30%',
 }

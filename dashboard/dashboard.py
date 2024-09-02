@@ -16,9 +16,25 @@ DB_PORT = os.getenv('DJANGO_PORT')
 DB_NAME = os.getenv('DJANGO_NAME')
 DB_URL = f'postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 
+N_PLACES = 20
+
+
 # DATABASE CONNECTION
 engine = create_engine(DB_URL)
 data = pd.read_sql('SELECT * FROM plates_platepaid', engine)
+
+# COUNTING OCCUPACITY
+occupied_places = pd.read_sql('SELECT COUNT(*) FROM plates_plate', engine)['count'][0]
+occupacity_data = pd.DataFrame(['Free' for _ in range(N_PLACES)], columns=['status'])
+
+if occupied_places > N_PLACES:
+    extra_places = occupied_places - N_PLACES
+    for i in range(extra_places):
+        occupacity_data.loc[N_PLACES + i, 'status'] = 'Free'
+
+occupacity_data.loc[:occupied_places - 1, 'status'] = 'Occupied'
+
+
 
 # CONVERTING INTO RIGHT DATA FORMAT
 data['arrived_at'] = data['arrived_at'].dt.tz_convert('Europe/Warsaw')
@@ -47,9 +63,24 @@ app.layout = html.Div([
                                          display_format='YYYY-MM', 
                                          date=datetime.now().date(),
                                          style={'position': 'absolute', 'top': '0', 'right': '0', 'width': '15%'}),
-                ], style=profit_per_month_style)
-            ]
-        )
+                ], style=profit_per_month_style),
+                html.Div([
+                    dcc.Graph(figure=px.pie(
+                                data_frame=occupacity_data,
+                                names='status',
+                                hole=0.7,
+                            ).update_layout(
+                                title={
+                                    'text': f'Currently occupied places: {str(occupied_places)}/{N_PLACES}' 
+                                            if occupied_places <= N_PLACES 
+                                            else f'Parking overflowed! {str(occupied_places)}/{N_PLACES} occupied (extra: {extra_places})',
+                                    'x': 0.5,
+                                    'xanchor': 'center',
+                                    'yanchor': 'top'
+                                }
+                            )),
+                ], style=occupacity_style),
+            ])
 
 # FUNCTIONS
 @app.callback(Output('cars_per_hour', 'figure'), 
