@@ -35,11 +35,11 @@ streamlit run app.py
 
 After that You should see UI like below:
 
-![alt text](image.png)
+![alt text](img/image.png)
 
 After passing an image to the application You will see whole process step by step:
 
-![alt text](image-1.png)
+![alt text](img/image-1.png)
 
 <p style="text-align: justify">You might notice that the result was send to the database and it's right! Saved result is going to the main database of django website.</p>
 
@@ -54,18 +54,18 @@ python manage.py runserver
 ```
 
 You should see the website intefrace like below:
-![alt text](image-2.png)
+![alt text](img/image-2.png)
 
 <p style="text-align: justify">This absolutely simple UI allows You to pay for Your visit at the parking. In the prototype I passed an image with code ALR486. Let's find it out:</p>
 
-![alt text](image-3.png)
+![alt text](img/image-3.png)
 
 <p style="text-align: justify">It works! As You can see, I didn't pass the whole code. Information passed in the form is looking for similiar codes and display all of them. I had only one code like that so only one has been displayed. You can click on the right code and You'll be moved to the details section:</p>
 
-![alt text](image-4.png)
+![alt text](img/image-4.png)
 
 <p style="text-align: justify">You can see informations like Your plate's code, exact time when You scanned Your image and cost of the parking. You can pay for a parking by clicking on the button or You can go back to the main page if You accidentally clicked wrong plate. After button click You'll see an information like below:</p>
 
-![alt text](image-6.png)
+![alt text](img/image-6.png)
 
 After that Your code will be removed to another table which is core of a dashboard.
